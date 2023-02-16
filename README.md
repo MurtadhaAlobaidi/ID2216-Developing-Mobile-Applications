@@ -19,5 +19,21 @@ You can log in with your `Email` and `Password`.
 
 ## What we used to develop our project
 1. Deploy, database and Authentication on Firebase
-2. React Native
+2. React Native, expo 
+<br />
+
+## How to setup the project
+1. Clone the repository to your local machine.
+```bash
+cd ID2216-Developing-Mobile-Applications
+```
+2. Run the installation of the project.
+```bash
+npm install
+```
+3. Run the server.
+```bash
+npx expo start
+```
+4. Start using the project
 <br />
