@@ -25,7 +25,7 @@ You can log in with your `Email` and `Password`.
 ## How to setup the project
 1. Clone the repository to your local machine.
 ```bash
-cd ID2216-Developing-Mobile-Applications
+cd BOKA-KTH-App
 ```
 2. Run the installation of the project.
 ```bash
