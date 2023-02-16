@@ -19,19 +19,19 @@ export default function App() {
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{headerShown: false}}/>
+          options={{ headerShown: false }} />
         <Stack.Screen
           name="ForgotPassword"
           component={ForgotPassword}
-          options={{headerShown: false}}/>
+          options={{ headerShown: false }} />
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{headerShown: false}}/>
+          options={{ headerShown: false }} />
         <Stack.Screen
           name="MyBookings"
           component={MyBookings}
-          options={{headerShown: false}}/>
+          options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
