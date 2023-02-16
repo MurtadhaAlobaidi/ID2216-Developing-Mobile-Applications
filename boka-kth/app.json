@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "boka-kth",
+    "slug": "boka-kth",
+    "version": "1.0.0",
+    "sdkVersion": "47.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "android": {
+      "package": "com.abdtra.bokakth"
+    },
+    "ios": {
+      "bundleIdentifier": "com.abdtra.bokakth"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "11cc896f-0cb1-44ac-b3e4-e3267aa44330"
+      }
+    }
+  }
+}
