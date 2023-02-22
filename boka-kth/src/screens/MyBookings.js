@@ -1,9 +1,11 @@
-import { View, Text, Button, SafeAreaView, Modal, ActivityIndicator, FlatList } from 'react-native';
+import { View, Text, Button, SafeAreaView, Modal, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
+import MyBookingsStyles from '../styles/MyBookingsStyles';
+import NavBarStyles from '../styles/NavBarStyles';
 import AppStyles from '../styles/AppStyles';
+
 import { auth, db } from '../config/firebase'
 import { signOut } from 'firebase/auth';
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc } from 'firebase/firestore';
-import InlineTextButton from '../components/InlineTextButton';
 import ChangeModal from '../components/ChangeModal';
 import React from 'react';
 
@@ -79,35 +81,6 @@ export default function MyBookings({ navigation }) {
         const ref2 = doc(db, "rooms", roomId);
         setDoc(ref2, { bookedTimeSlots: bookedTimeSlots }, { merge: true });
         setDoc(ref2, { bookingUser: bookingUser }, { merge: true });
-    };
-
-    // Reset the database, nollställa alla bokningar och relevanta fields från andra collections
-    let resetEverything = async () => {
-        const q = query(collection(db, "bookings"))
-        const querySnapshot = await getDocs(q)
-        querySnapshot.forEach((doc) => {
-            let x = doc.data()
-            x.id = doc.id
-            deleteBooking(x)
-        });
-
-
-        // clean bookedhours for all users in db
-        let users = [];
-        const q2 = query(collection(db, "Users"));
-        const querySnapshot2 = await getDocs(q2);
-        querySnapshot2.forEach((doc) => {
-            let y = doc.data();
-            y.id = doc.id;
-            users.push(y);
-        });
-        console.log(users);
-
-        users.forEach((el) => {
-            const ref2 = doc(db, "Users", el.id);
-            setDoc(ref2, { bookedHours: 0 }, { merge: true });
-        });
-
     };
 
 
@@ -186,20 +159,33 @@ export default function MyBookings({ navigation }) {
 
     let renderBooking = ({ item }) => {
         return (
-            <View style={AppStyles.rowContainer}>
-                <InlineTextButton text="Ändra" onPress={() => { changeBooking(item); refresh(500) }} />
-                <Button
-                    style={AppStyles.loginButton}
-                    title={
-                        "Rum: " + item.roomId + " \n"
-                        + "Starttid: " + item.start + " \n"
-                        + "Sluttid: " + item.end + " \n"
-                        + "Skapad av: " + item.user + " \n"
-                    }
-                >
-                </Button>
-                <InlineTextButton text="Avboka" onPress={() => deleteBooking(item)} />
+            <View style={MyBookingsStyles.bookingContainer}>
+                <View style={MyBookingsStyles.infoContainer}>
+                    <Text style={MyBookingsStyles.infoHeader}>Rum</Text>
+                    <Text style={MyBookingsStyles.infoText}>{item.roomId}</Text>
+                </View>
+                <View style={MyBookingsStyles.infoContainer}>
+                    <Text style={MyBookingsStyles.infoHeader}>Starttid</Text>
+                    <Text style={MyBookingsStyles.infoText}>{item.start}</Text>
+                </View>
+                <View style={MyBookingsStyles.infoContainer}>
+                    <Text style={MyBookingsStyles.infoHeader}>Sluttid</Text>
+                    <Text style={MyBookingsStyles.infoText}>{item.end}</Text>
+                </View>
+                <View style={MyBookingsStyles.infoContainer}>
+                    <Text style={MyBookingsStyles.infoHeader}>Skapad av</Text>
+                    <Text style={MyBookingsStyles.infoText}>{item.user}</Text>
+                </View>
+                <View style={MyBookingsStyles.buttonContainer}>
+                    <TouchableOpacity style={MyBookingsStyles.editButton} onPress={() => { changeBooking(item); refresh(500) }}>
+                        <Text style={MyBookingsStyles.buttonText}>Ändra</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={MyBookingsStyles.deleteButton} onPress={() => deleteBooking(item)}>
+                        <Text style={MyBookingsStyles.buttonText}>Avboka</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
+
         );
     };
 
@@ -236,12 +222,16 @@ export default function MyBookings({ navigation }) {
 
 
     return (
-        <SafeAreaView style={AppStyles.container}>
-            <View style={[AppStyles.rowContainer, AppStyles.rightAligned]}>
-                <InlineTextButton text="Boka nu" onPress={() => { navigation.navigate("Home"); refresh(500) }} />
-                <Button title='Sign out' onPress={logout} style={AppStyles.logoutButton} />
+        <SafeAreaView style={MyBookingsStyles.container}>
+            <View style={NavBarStyles.buttonContainer}>
+                <TouchableOpacity style={NavBarStyles.bookButton} onPress={() => { navigation.navigate("Home"); refresh(500) }}>
+                    <Text style={NavBarStyles.bookButtonText}>Till bokningen</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={NavBarStyles.logoutButton} onPress={logout}>
+                    <Text style={NavBarStyles.logoutButtonText}>Sign Out</Text>
+                </TouchableOpacity>
             </View>
-            <Modal
+            {/* <Modal
                 transparent={true}
                 visible={modalVisible}
                 onRequestClose={() => setModalVisible(false)}>
@@ -249,16 +239,25 @@ export default function MyBookings({ navigation }) {
                     onClose={() => setModalVisible(false)}
                     room={rebook}
                 />
-            </Modal>
-            <Text style={AppStyles.header}>Mina bokningar</Text>
-            <Text style={AppStyles.lightText}>{auth.currentUser.email}</Text>
+            </Modal> */}
+            {/* <View style={MyBookingsStyles.container}>
+                <Text style={MyBookingsStyles.header}>Mina bokningar</Text>
+                <View style={MyBookingsStyles.userInfoContainer}>
+                    <Text style={MyBookingsStyles.userInfoText}>
+                        Du är inloggad som: {auth.currentUser.email}
+                    </Text>
+                </View>
+            </View> */}
+
+            <View style={MyBookingsStyles.bookingInfoContainer}></View>
+            <Text style={MyBookingsStyles.bookingInfoTitle}>Mina bokningar</Text>
+            <View style={MyBookingsStyles.bookingInfo}>
+                <Text style={MyBookingsStyles.bookingInfoText}> Du är inloggad som: {auth.currentUser.email}</Text>
+            </View>
 
 
-            {/* <Button disabled={isAdmin ? true : false} 
-            onPress={() => resetEverything()} title='Clean all bookings' /> */}
-            {/* <Button onPress={() => {window.location.reload(false); navigation.navigate('MyBookings');}} title='Refresh page' /> */}
 
             {auth.currentUser ? showContent() : null}
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
