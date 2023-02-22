@@ -29,10 +29,7 @@ export default StyleSheet.create({
     darkTextInput: {
         borderBottomColor: "#000000"
     },
-    loginButton: {
-        backgroundColor: '#3485E2',
-        borderColor: '#3485E2'
-    },
+
     roomButton: {
         backgroundColor: '#DFD985',
         borderColor: '#DFD985',
@@ -90,6 +87,6 @@ export default StyleSheet.create({
     },
     errorMessage: {
         color: "#ff0000"
-    }
+    },
 });
 

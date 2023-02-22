@@ -1,22 +1,10 @@
-import { Text, View, TextInput, Button } from 'react-native';
-import AppStyles from '../styles/AppStyles';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import LoginStyles from '../styles/LoginStyles';
 import React from 'react';
-import InlineTextButton from '../components/InlineTextButton';
 import { auth } from '../config/firebase'
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 export default function Login({ navigation }) {
-
-  // if (auth.currentUser) {
-  //   navigation.navigate("Home");
-  // } 
-  // else {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       navigation.navigate("Home")
-  //     }
-  //   });
-  // }
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -33,7 +21,7 @@ export default function Login({ navigation }) {
     if (email !== "" && password !== "") {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-         navigation.navigate("Home", {user: userCredential.user});
+          navigation.navigate("Home", { user: userCredential.user });
         })
         .catch((error) => {
           setErrorMessage(error.message)
@@ -42,30 +30,33 @@ export default function Login({ navigation }) {
   }
 
   return (
-    <View style={AppStyles.container}>
-      <Text style={ AppStyles.header }>Sign in to book a room</Text>
-      <Text style={AppStyles.errorMessage}>{errorMessage}</Text>
-      <TextInput 
-        placeholder='exempel@kth.se' 
-        style={[AppStyles.textInput, AppStyles.lightTextInput, AppStyles.lightText]} 
-        placeholderTextColor="#BEBEBE"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType='email-address'
-      />
-      <TextInput 
-        placeholder='Lösenord' 
-        style={[AppStyles.textInput, AppStyles.lightTextInput, AppStyles.lightText]} 
-        placeholderTextColor="#BEBEBE" 
-        secureTextEntry={true}
-        value={password}
-        onChangeText={setPassword}
-      />
-      <Button title="Login" onPress={signIn} color="#f7b267" style={AppStyles.loginButton} />
-      <View style={[AppStyles.rowContainer, AppStyles.topMargin]}>
-        <Text style={AppStyles.lightText}>Forgot your password?</Text>
-        <InlineTextButton text="Reset" onPress={() => navigation.navigate("ForgotPassword")} />
+    <View style={LoginStyles.container}>
+      <View style={LoginStyles.loginContainer}>
+        <Text style={LoginStyles.header}>Sign in to book a room</Text>
+        <TextInput
+          placeholder='Email'
+          style={LoginStyles.textInput}
+          placeholderTextColor="#BEBEBE"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType='email-address'
+        />
+        <TextInput
+          placeholder='Password'
+          style={LoginStyles.textInput}
+          placeholderTextColor="#BEBEBE"
+          secureTextEntry={true}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity style={LoginStyles.loginButton} onPress={signIn}>
+          <Text style={LoginStyles.loginButtonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={LoginStyles.forgotPasswordText} onPress={() => navigation.navigate("ForgotPassword")}>Forgot your password?</Text>
+        </TouchableOpacity>
       </View>
     </View>
+
   );
 };
