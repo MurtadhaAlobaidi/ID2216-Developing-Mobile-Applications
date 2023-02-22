@@ -28,21 +28,6 @@ export default function Home({ navigation }) {
         }, time);
     }
 
-
-    // let getTotalBookigns = async () => {
-    //     const q2 = query(collection(db, "bookings"), count)
-    //     const querySnapshot3 = await getDocs(q2)
-    //     const count = await querySnapshot3.size
-    //     console.log(count);
-    //     return count
-    // }
-
-    // if(getTotalBookigns != totalBookings) {
-    //     setTotalBookings(getTotalBookigns)
-    // }
-
-
-
     let getBookedHours = async () => {
         const q2 = query(collection(db, "Users"), where("email", "==", auth.currentUser.email));
         const querySnapshot2 = await getDocs(q2);
@@ -52,23 +37,6 @@ export default function Home({ navigation }) {
             setNrBookedHours(item.bookedHours);
         });
     };
-
-    let resetNrBookedHours = () => {
-        setNrBookedHours(0);
-        const ref = doc(db, "Users", userId);
-        setDoc(ref, { bookedHours: 0 }, { merge: true });
-
-    };
-
-    let fixit = async () => {
-        const docRef = await addDoc(collection(db, "rooms"), {
-            roomId: x,
-            bookedTimeSlots: [false, false, false, false, false, false, false, false, false],
-            bookingUser: ["", "", "", "", "", "", "", "", ""]
-        });
-        x++;
-    };
-
 
 
     let loadRooms = async () => {
@@ -146,12 +114,7 @@ export default function Home({ navigation }) {
                 setIsLoading(false)
 
 
-                // if (totalBookings != getTotalBookigns()) {
                 refresh(500);
-
-
-                //}
-
 
 
 
@@ -231,13 +194,13 @@ export default function Home({ navigation }) {
 
                 <Button title='Sign out' onPress={logout} style={AppStyles.logoutButton} />
             </View>
+
+
+
+
             <Text style={AppStyles.header}>Boka KTH</Text>
             <Text style={AppStyles.lightText}>Current user: {auth.currentUser.email}</Text>
             <Text style={AppStyles.errorMessage}>{errorMessage}</Text>
-            {/* <Text style={AppStyles.errorMessage}>{nrBookedHours}</Text>
-            <Button onPress={() => resetNrBookedHours()} title='reset nrBookedHours' />
-            <Button onPress={() => fixit()} disabled={true} title='Create room' />
-            <Button onPress={() => getTotalBookigns()} title='total nr booking' /> */}
 
             {auth.currentUser ? showContent() : null}
         </SafeAreaView>
