@@ -223,6 +223,7 @@ export default function MyBookings({ navigation }) {
 
     return (
         <SafeAreaView style={MyBookingsStyles.container}>
+            
             <View style={NavBarStyles.buttonContainer}>
                 <TouchableOpacity style={NavBarStyles.bookButton} onPress={() => { navigation.navigate("Home"); refresh(500) }}>
                     <Text style={NavBarStyles.bookButtonText}>Till bokningen</Text>
@@ -231,23 +232,6 @@ export default function MyBookings({ navigation }) {
                     <Text style={NavBarStyles.logoutButtonText}>Sign Out</Text>
                 </TouchableOpacity>
             </View>
-            {/* <Modal
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)}>
-                <ChangeModal
-                    onClose={() => setModalVisible(false)}
-                    room={rebook}
-                />
-            </Modal> */}
-            {/* <View style={MyBookingsStyles.container}>
-                <Text style={MyBookingsStyles.header}>Mina bokningar</Text>
-                <View style={MyBookingsStyles.userInfoContainer}>
-                    <Text style={MyBookingsStyles.userInfoText}>
-                        Du är inloggad som: {auth.currentUser.email}
-                    </Text>
-                </View>
-            </View> */}
 
             <View style={MyBookingsStyles.bookingInfoContainer}></View>
             <Text style={MyBookingsStyles.bookingInfoTitle}>Mina bokningar</Text>
