@@ -225,7 +225,7 @@ export default function MyBookings({ navigation }) {
         <SafeAreaView style={MyBookingsStyles.container}>
 
             <View style={NavBarStyles.buttonContainer}>
-                <TouchableOpacity style={NavBarStyles.bookButton} onPress={() => { navigation.navigate("Home"); refresh(500) }}>
+                <TouchableOpacity style={NavBarStyles.bookButton} onPress={() => { navigation.navigate("Home"); }}>
                     <Text style={NavBarStyles.bookButtonText}>Till bokningen</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={NavBarStyles.logoutButton} onPress={logout}>
