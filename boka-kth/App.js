@@ -3,6 +3,9 @@ import Login from './src/screens/Login';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Home from './src/screens/Home';
 import MyBookings from './src/screens/MyBookings';
+import TimeSlotRooms from './src/screens/TimeSlotRooms';
+
+
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -32,6 +35,12 @@ export default function App() {
           name="MyBookings"
           component={MyBookings}
           options={{ headerShown: false }} />
+
+        <Stack.Screen
+          name="TimeSlotRooms"
+          component={TimeSlotRooms}
+          options={{ headerShown: false }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
