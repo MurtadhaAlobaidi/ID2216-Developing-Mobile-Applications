@@ -1,4 +1,4 @@
-import { View, Text, Button, SafeAreaView, ActivityIndicator, FlatList, Alert } from 'react-native';
+import { View, Text, Button, SafeAreaView, ActivityIndicator, FlatList, Alert, TouchableOpacity } from 'react-native';
 import AppStyles from '../styles/AppStyles';
 import { auth, db } from '../config/firebase'
 import { signOut } from 'firebase/auth';
@@ -6,6 +6,8 @@ import { collection, addDoc, query, getDocs, setDoc, doc, orderBy, where } from 
 import InlineTextButton from '../components/InlineTextButton';
 import React from 'react';
 import TimeSlot from '../components/TimeSlot';
+import MyBookingsStyles from '../styles/MyBookingsStyles';
+import NavBarStyles from '../styles/NavBarStyles';
 
 
 export default function Home({ navigation }) {
@@ -189,17 +191,30 @@ export default function Home({ navigation }) {
 
     return (
         <SafeAreaView style={AppStyles.container}>
-            <View style={[AppStyles.rowContainer, AppStyles.rightAligned]}>
-                <InlineTextButton text="Mina bokningar" onPress={() => navigation.navigate("MyBookings")} />
 
+            {/* <View style={[AppStyles.rowContainer, AppStyles.rightAligned]}>
+                <InlineTextButton text="Mina bokningar" onPress={() => navigation.navigate("MyBookings")} />
                 <Button title='Sign out' onPress={logout} style={AppStyles.logoutButton} />
+            </View> */}
+
+            <View style={NavBarStyles.buttonContainer}>
+                <TouchableOpacity style={NavBarStyles.bookButton} onPress={() => { navigation.navigate("MyBookings") }}>
+                    <Text style={NavBarStyles.bookButtonText}>My bokning</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={NavBarStyles.logoutButton} onPress={logout}>
+                    <Text style={NavBarStyles.logoutButtonText}>Sign Out</Text>
+                </TouchableOpacity>
             </View>
 
 
 
 
-            <Text style={AppStyles.header}>Boka KTH</Text>
-            <Text style={AppStyles.lightText}>Current user: {auth.currentUser.email}</Text>
+            <View style={MyBookingsStyles.bookingInfoContainer}></View>
+            <Text style={MyBookingsStyles.bookingInfoTitle}>Boka KTH</Text>
+            <View style={MyBookingsStyles.bookingInfo}>
+                <Text style={MyBookingsStyles.bookingInfoText}> Du är inloggad som: {auth.currentUser.email}</Text>
+            </View>
+
             <Text style={AppStyles.errorMessage}>{errorMessage}</Text>
 
             {auth.currentUser ? showContent() : null}
