@@ -14,8 +14,4 @@ web-build/
 # macOS
 .DS_Store
 .tstex_modules
-boka-kth/.firebase/.hosting.cHVibGlj 2.cache.icloud
-*.icloud
-.idea/jpa-buddy.xml
-.idea/misc.xml
-.idea/vcs.xml
+
