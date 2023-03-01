@@ -19,9 +19,9 @@ You can log in with your `Email` and `Password`.
 
 ## What we used to develop our project
 1. Deploy, database and Authentication on Firebase
-2. React Native, expo 
-<br>
-You can see the UML diagram ([])
+2. React Native, expo <br />
+
+You can see the UML diagram ([wiki](https://github.com/MurtadhaAlobaidi/ID2216-Developing-Mobile-Applications/wiki))
 <br />
 
 ## How to setup the project
