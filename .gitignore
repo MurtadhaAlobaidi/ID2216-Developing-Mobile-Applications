@@ -16,3 +16,6 @@ web-build/
 .tstex_modules
 boka-kth/.firebase/.hosting.cHVibGlj 2.cache.icloud
 *.icloud
+.idea/jpa-buddy.xml
+.idea/misc.xml
+.idea/vcs.xml
