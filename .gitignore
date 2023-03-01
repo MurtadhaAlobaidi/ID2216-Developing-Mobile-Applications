@@ -15,3 +15,8 @@ web-build/
 .DS_Store
 .tstex_modules
 
+.idea/vcs.xml
+.idea/modules.xml
+.idea/misc.xml
+.idea/jpa-buddy.xml
+.idea/ID2216-Developing-Mobile-Applications.iml
