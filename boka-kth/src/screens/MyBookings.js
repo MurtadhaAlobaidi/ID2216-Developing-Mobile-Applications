@@ -8,6 +8,7 @@ import { signOut } from 'firebase/auth';
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc } from 'firebase/firestore';
 import ChangeModal from '../components/ChangeModal';
 import React from 'react';
+import { useState } from 'react';
 
 export default function MyBookings({ navigation }) {
 
@@ -20,6 +21,7 @@ export default function MyBookings({ navigation }) {
     let [userId, setUserId] = React.useState('');
     let [nrBookedHours, setNrBookedHours] = React.useState(0);
     let [newTimeSlot, setNewTimeSlot] = React.useState();
+    const [errorMessage, setErrorMessage] = useState('');
 
 
     let getBookedHours = async () => {
@@ -40,17 +42,23 @@ export default function MyBookings({ navigation }) {
 
 
     let loadBookings = async () => {
-        const q = query(collection(db, "bookings"), where("user", "==", auth.currentUser.email));
-
-        const querySnapshot = await getDocs(q);
-        let bookings = [];
-        querySnapshot.forEach((doc) => {
-            let booking = doc.data();
-            booking.id = doc.id;
-            bookings.push(booking);
-        });
-        setBookings(bookings);
-        setIsLoading(false);
+        try {
+            const q = query(collection(db, "bookings"), where("user", "==", auth.currentUser.email));
+            const querySnapshot = await getDocs(q);
+            let bookings = [];
+            querySnapshot.forEach((doc) => {
+                let booking = doc.data();
+                booking.id = doc.id;
+                bookings.push(booking);
+            });
+            setBookings(bookings);
+            setIsLoading(false);
+        } catch (error) {
+            console.error(error);
+            setErrorMessage("Failed to load rooms.");
+            setIsLoading(false);
+        }
+        console.log(bookings);
     };
 
     if (isLoading) {
@@ -58,9 +66,10 @@ export default function MyBookings({ navigation }) {
         getBookedHours();
     };
 
-    if (auth.currentUser.email === "abdtra@kth.se") {
-        isAdmin = true;
-    };
+
+    // if (auth.currentUser.email === "abdtra@kth.se") {
+    //     isAdmin = true;
+    // };
 
 
 
