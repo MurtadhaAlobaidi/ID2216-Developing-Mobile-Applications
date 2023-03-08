@@ -191,7 +191,7 @@ export default function MyBookings({ navigation }) {
             onPress={() => {
               setItem(item);
               setMsg("Är du säker på att du vill ta bort din bokning?");
-              setTitle("Bekräfta radering");
+              setTitle("Bekräfta Avbokning");
               setIsSure(true);
               setShowAlert(true);
             }}
