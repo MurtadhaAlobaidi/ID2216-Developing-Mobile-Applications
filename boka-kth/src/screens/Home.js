@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   FlatList,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import { auth, db } from "../config/firebase";
 import { signOut } from "firebase/auth";
@@ -18,7 +17,7 @@ import NavBarStyles from "../styles/NavBarStyles";
 import MyBookingsStyles from "../styles/MyBookingsStyles";
 
 export default function Home({ navigation, route }) {
-  const message  = route.params; // hämta from MyBookings
+  //const message  = route.params; // hämta from MyBookings
 
 
   const [isLoading, setIsLoading] = useState(true);
@@ -26,9 +25,10 @@ export default function Home({ navigation, route }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   // const myObjStr = JSON.stringify(message);
-  // alert(myObjStr);
-  // console.log(myObjStr);
-
+  // if(message) {
+  //   alert(myObjStr);
+  // }
+  
   const loadRooms = async () => {
     try {
       const q = query(collection(db, "rooms"), orderBy("roomId", "asc"));
