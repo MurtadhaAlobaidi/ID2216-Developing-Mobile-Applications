@@ -6,7 +6,6 @@ import AppStyles from '../styles/AppStyles';
 import { auth, db } from '../config/firebase'
 import { signOut } from 'firebase/auth';
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc } from 'firebase/firestore';
-import ChangeModal from '../components/ChangeModal';
 import React from 'react';
 import { useState } from 'react';
 
