@@ -9,6 +9,13 @@ export default StyleSheet.create({
     justifyContent: "center",
     color: "blue",
   },
+  container5: {
+    flex: 1,
+    backgroundColor: "#fff",
+    margin: 16,
+    justifyContent: "center",
+    color: "blue",
+  },
   lightText: {
     color: "#111",
   },
@@ -95,5 +102,8 @@ export default StyleSheet.create({
   },
   errorMessage: {
     color: "#ff0000",
+    justifyContent: "center",
+    alignContent: "center",
+    textAlign:"center",
   },
 });

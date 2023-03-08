@@ -140,7 +140,4 @@ export default StyleSheet.create({
 
 
 
-
-
-
 });
