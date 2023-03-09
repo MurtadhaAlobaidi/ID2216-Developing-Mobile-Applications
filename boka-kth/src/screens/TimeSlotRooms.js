@@ -151,7 +151,7 @@ export default function TimeSlotRooms({ navigation, route }) {
             navigation.navigate("Home");
           }}
         >
-          <Text style={NavBarStyles.bookButtonText}>Min bokning</Text>
+          <Text style={NavBarStyles.bookButtonText}>Tillbaka</Text>
         </TouchableOpacity>
         <TouchableOpacity style={NavBarStyles.logoutButton} onPress={logout}>
           <Text style={NavBarStyles.logoutButtonText}>Logga ut</Text>
@@ -159,13 +159,16 @@ export default function TimeSlotRooms({ navigation, route }) {
       </View>
 
       <View style={AppStyles.container5}>
+        <Text style={AppStyles.errorMessage}></Text>
+        <Text style={AppStyles.errorMessage}></Text>
+        <Text style={AppStyles.errorMessage}>{errorMessage}</Text>
         <Text style={MyBookingsStyles.bookingInfoTitle}>Rum {roomId}</Text>
         <View style={MyBookingsStyles.bookingInfo}>
           <Text style={MyBookingsStyles.bookingInfoText}>
-            Du är inloggad som:
+            {" "}
+            Du är inloggad som:{" "}
             {auth.currentUser ? auth.currentUser.email : null}
           </Text>
-          <Text style={AppStyles.errorMessage}>{errorMessage}</Text>
         </View>
         {auth.currentUser ? renderTimeSlots() : null}
       </View>
