@@ -5,10 +5,12 @@ import {
   ActivityIndicator,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import MyBookingsStyles from "../styles/MyBookingsStyles";
 import NavBarStyles from "../styles/NavBarStyles";
 import AppStyles from "../styles/AppStyles";
+import CustomAlert from '../components/CustomAlert';
 
 import { auth, db } from "../config/firebase";
 import { signOut } from "firebase/auth";
@@ -32,6 +34,32 @@ export default function MyBookings({ navigation }) {
   let [userId, setUserId] = React.useState("");
   let [nrBookedHours, setNrBookedHours] = React.useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [item, setItem] = useState();
+  const [msg, setMsg] = useState("");
+  const [title, setTitle] = useState("");
+  const [isSure, setIsSure] = useState(false);
+
+
+
+
+
+  const handleConfirm = () => {
+    console.log('Confirmed');
+    setShowAlert(false);
+    if (isSure) {
+      deleteBooking(item);
+      setIsSure(false);
+    } else {
+      changeBooking(item);
+    }
+  };
+
+  const handleCancel = () => {
+    console.log('Cancelled');
+    navigation.navigate("MyBookings");
+    setShowAlert(false);
+  };
 
   let getBookedHours = async () => {
     const q2 = query(
@@ -74,7 +102,7 @@ export default function MyBookings({ navigation }) {
     getBookedHours();
   }
 
-  if (!bookings) {
+  if (bookings == null) {
     nrBookedHours = 0;
     setNrBookedHours(nrBookedHours);
   }
@@ -120,9 +148,12 @@ export default function MyBookings({ navigation }) {
     const ref = doc(db, "bookings", item.id);
     setRef(ref);
     deleteBooking(item);
-    const message = "Din gamla bokning har raderats, välj en ny tid för att boka den!";
-    navigation.navigate("Home", { message:  message});
+    const msg = "Din gamla bokning har raderats, välj en ny tid för att boka den!";
+    navigation.navigate("Home", { message:  msg});
   };
+
+  
+
 
   let renderBooking = ({ item }) => {
     return (
@@ -147,14 +178,23 @@ export default function MyBookings({ navigation }) {
           <TouchableOpacity
             style={MyBookingsStyles.editButton}
             onPress={() => {
-              changeBooking(item);
+              setItem(item);
+              setMsg("Om du bekräftar detta kommer din valda bokning att raderas och du skickas vidare till bokningssidan");
+              setTitle("Bekräfta ändring");
+              setShowAlert(true);
             }}
           >
             <Text style={MyBookingsStyles.buttonText}>Ändra</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={MyBookingsStyles.deleteButton}
-            onPress={() => deleteBooking(item)}
+            onPress={() => {
+              setItem(item);
+              setMsg("Är du säker på att du vill ta bort din bokning?");
+              setTitle("Bekräfta Avbokning");
+              setIsSure(true);
+              setShowAlert(true);
+            }}
           >
             <Text style={MyBookingsStyles.buttonText}>Avboka</Text>
           </TouchableOpacity>
@@ -219,6 +259,14 @@ export default function MyBookings({ navigation }) {
           </Text>
         </View>
         {auth.currentUser ? showContent() : null}
+        {showAlert && (
+        <CustomAlert
+          title={title}
+          message={msg}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      )}
       </View>
     </SafeAreaView>
   );
